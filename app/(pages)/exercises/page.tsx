@@ -1,5 +1,6 @@
 "use client"
 
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { FillInTheBlankType } from '@/lib/types';
@@ -9,7 +10,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function Page() {
 	const router = useRouter();
-	const [exercises, setExercises] = useState<FillInTheBlankType[]>([]);
+	const [exercises, setExercises] = useState<FillInTheBlankType[] | undefined>(undefined);
 	useEffect(() => {
 		fetchData();
 	}, [])
@@ -31,11 +32,16 @@ export default function Page() {
 		<div>
 			<h1 className=''>Exercises</h1>
 			<div className='flex flex-col gap-4'>
-				{exercises.length > 0 && exercises.map((exercise, index: number) => 
-					<Button className='w-fit' key={index} onClick={() => router.push(`/exercises/${exercise._id}`)}>
-						{exercise.title}
-					</Button>
+				{exercises && exercises.length > 0 && exercises.map((exercise, index: number) => 
+					<div>
+						<Button className='w-fit' key={index} onClick={() => router.push(`/exercises/${exercise._id}`)}>
+							{exercise.title}
+						</Button>
+						
+					</div>
 				)}
+			   	{exercises === undefined && <p>Fetching ...</p>}
+			   	{exercises && exercises.length === 0 && <p>No exercises ...</p>}
 			</div>
 		</div>
 	)
