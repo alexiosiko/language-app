@@ -22,12 +22,13 @@ const navItems: NavItemType[] = [
 ]
 export default function Nav() {
 	return (
-		<div className='w-72 p-12 h-screen mr-2 outline outline-card flex flex-col'>
-			<Link href="/"><h1 className='mb-12 text-primary'>greeklingo</h1></Link>
+		<div className='md:w-72 md:p-12 max-md:justify-between max-md:pt-2 md:h-screen md:mr-2  outline outline-card flex md:flex-col'>
+			<Link href="/"><h1 className='mb-12 max-md:hidden  text-primary'>greeklingo</h1></Link>
+
 			{navItems.map((item: NavItemType, index: number) => 
-				<Link href={item.href} key={index} className='flex gap-2 mb-2 items-center'>
+				<Link href={item.href} key={index} className='flex max-md:mx-auto gap-2 mb-2 items-center'>
 					{item.icon} 
-					<p>{item.title}</p>
+					<p className='max-md:hidden'>{item.title}</p>
 					
 				</Link>
 			)}

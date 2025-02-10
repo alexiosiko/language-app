@@ -49,7 +49,7 @@ export default function Page() {
 		}
 	}
 	return (
-		<div>
+		<div className='flex flex-col gap-4'>
 			<h1>Resources</h1>
 			{resources?.map((resource, index) => 
 				<div key={index} className='flex justify-between'>

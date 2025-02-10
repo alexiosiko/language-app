@@ -22,9 +22,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${font.className} dark antialiased flex`}>
+			<body className={`${font.className} dark antialiased md:flex`}>
 				<Nav />
-				<div className="p-20 w-full">
+				<div className="md:p-20 max-md:p-4 w-full">
 					{children}
 				</div>
 				<Toaster />
