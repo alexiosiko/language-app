@@ -3,7 +3,7 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { FillInTheBlankType } from '@/lib/types'
 import 'axios';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FillInBlank from '@/components/fillintheblank/fillinblank'
 import axios from 'axios'
 import { toast } from '@/hooks/use-toast'
@@ -78,14 +78,14 @@ export default function Page({ params }: {
 				<AlertDialogTrigger><Button variant="destructive">Delete</Button></AlertDialogTrigger>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-					<AlertDialogTitle>Are you sure you want to delete this exercise?</AlertDialogTitle>
-					<AlertDialogDescription>
-						This action cannot be undone. 
-					</AlertDialogDescription>
+						<AlertDialogTitle>Are you sure you want to delete this exercise?</AlertDialogTitle>
+						<AlertDialogDescription>
+							This action cannot be undone. 
+						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={onDelete}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogAction onClick={onDelete}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>

@@ -1,6 +1,5 @@
 "use client"
 
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { FillInTheBlankType } from '@/lib/types';
@@ -33,8 +32,8 @@ export default function Page() {
 			<h1 className=''>Exercises</h1>
 			<div className='flex flex-col gap-4'>
 				{exercises && exercises.length > 0 && exercises.map((exercise, index: number) => 
-					<div>
-						<Button className='w-fit' key={index} onClick={() => router.push(`/exercises/${exercise._id}`)}>
+					<div key={index}>
+						<Button className='w-fit'  onClick={() => router.push(`/exercises/${exercise._id}`)}>
 							{exercise.title}
 						</Button>
 						
