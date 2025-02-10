@@ -8,7 +8,9 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 let db: Db | null = null;
 
+
 declare global {
+	// eslint-disable-next-line
 	var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
@@ -21,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 	if (!global._mongoClientPromise) {
 		client = new MongoClient(uri, options);
 		global._mongoClientPromise = client.connect();
-	}
+	} 
 	clientPromise = global._mongoClientPromise;
 } else {
 	// In production mode, create a new client

@@ -1,9 +1,7 @@
 "use client"
 
-import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { FillInTheBlankType } from '@/lib/types'
-import Link from 'next/link'
 import 'axios';
 import React, { useEffect, useState } from 'react'
 import FillInBlank from '@/components/fillintheblank/fillinblank'
@@ -14,31 +12,29 @@ export default function Page({ params }: {
 }) {
 	const [data, setData] = useState<FillInTheBlankType | null>(null)
 	
-	const fetch = async () => {
-		try {
-			const res = await axios.get("/api/exercises", {
-				params: {
-					id: (await params).id
-				}
-			})
-			console.log(res.data);
-			if (res.status == 200)
-				setData(res.data);
-			else
-				throw Error("Could not fetch excerise");
-		} catch (e: any) {
-			toast({
-				title: e.message,
-				variant: "destructive"
-			});
-		}
-
-	}
-	const onComplete = async () => {
-
-	}
 	useEffect(() => {
+		const fetch = async () => {
+			try {
+				const res = await axios.get("/api/exercises", {
+					params: {
+						id: (await params).id
+					}
+				})
+				console.log(res.data);
+				if (res.status == 200)
+					setData(res.data);
+				else
+					throw Error("Could not fetch excerise");
+			} catch (e: any) {
+				toast({
+					title: e.message,
+					variant: "destructive"
+				});
+			}
+	
+		}
 		fetch();
+		// eslint-disable-next-line
 	}, [])
 	return (
 		<Card>

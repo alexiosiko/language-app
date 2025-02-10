@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Karla, Open_Sans, Poppins, Roboto, Roboto_Mono, Rubik, } from "next/font/google";
+import { Karla } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/ui/nav";
 import { Toaster } from "@/components/ui/toaster";

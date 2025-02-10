@@ -1,12 +1,11 @@
 import { dbPromise } from "@/lib/mongodb";
-import { FillInTheBlankWithoutObjectIdType, Resource } from "@/lib/types";
+import { ResourceWithout_id } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
-import { ObjectId } from "mongodb";
 
 export async function PUT(req: NextRequest) {
 	try {
 		const db = await dbPromise();
-		const data = await req.json() as Resource;
+		const data = await req.json() as ResourceWithout_id;
 		const collection = db.collection('resources');
 		await collection.insertOne(data);
 		return NextResponse.json({ message: "Success" });
@@ -20,7 +19,7 @@ export async function GET() {
 	  const db = await dbPromise();
 	  const collection = db.collection('resources');
   
-	  let data = await collection.find({}).toArray();
+	  const data = await collection.find({}).toArray();
 	  return NextResponse.json(data);
 	} catch (e: any) {
 	  console.error(e);
