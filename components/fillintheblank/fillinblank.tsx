@@ -9,9 +9,9 @@ export default function FillInBlank({ line }: {
 	line: LineType,
 }) {
 	const [reveal, setReveal] = useState<boolean>(false);
-	console.log(line);
-  return (
-		<CardContent className='flex gap-2 mb-8'>
+
+	return (
+		<CardContent className='flex gap-2 mb-8 flex-wrap'>
 			{stringToArray(line.text).map((word, wordIndex: number) => {
 				if (line.blankIndices.includes(wordIndex))
 					return (
@@ -30,5 +30,5 @@ export default function FillInBlank({ line }: {
 			<FcSearch size={32} className='hover:cursor-pointer' onClick={() => setReveal(!reveal)} />
 			<hr/>
 		</CardContent>
-  )
+	)
 }

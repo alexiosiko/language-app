@@ -19,7 +19,7 @@ export default function Page({ params }: {
 	useEffect(() => {
 		const fetch = async () => {
 			try {
-				const res = await axios.get("/api/exercises", {
+				const res = await axios.get("/api/fill-in-the-blank", {
 					params: {
 						_id: (await params)._id
 					}
@@ -43,7 +43,7 @@ export default function Page({ params }: {
 
 	const onDelete = async () => {
 		try {
-			const res = await axios.delete('/api/exercises', {
+			const res = await axios.delete('/api/fill-in-the-blank', {
 				params: {
 					_id: data?._id
 				}
@@ -75,7 +75,7 @@ export default function Page({ params }: {
 				{/* <Link href='/'><Button variant="secondary">Back</Button></Link> */}
 				
 			<AlertDialog>
-				<AlertDialogTrigger><Button variant="destructive">Delete</Button></AlertDialogTrigger>
+				<AlertDialogTrigger asChild><Button variant="destructive">Delete</Button></AlertDialogTrigger>
 				<AlertDialogContent>
 					<AlertDialogHeader>
 						<AlertDialogTitle>Are you sure you want to delete this exercise?</AlertDialogTitle>
@@ -85,7 +85,7 @@ export default function Page({ params }: {
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
-						<AlertDialogAction onClick={onDelete}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
+						<AlertDialogAction asChild onClick={onDelete}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>

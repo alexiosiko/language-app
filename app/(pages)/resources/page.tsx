@@ -57,7 +57,7 @@ export default function Page() {
 						{resource.title}
 					</Button>
 					<AlertDialog>
-						<AlertDialogTrigger><Button variant="destructive">Delete</Button></AlertDialogTrigger>
+						<AlertDialogTrigger asChild><Button variant="destructive">Delete</Button></AlertDialogTrigger>
 						<AlertDialogContent>
 							<AlertDialogHeader>
 							<AlertDialogTitle>Are you sure you want to delete this exercise?</AlertDialogTitle>
@@ -67,7 +67,7 @@ export default function Page() {
 							</AlertDialogHeader>
 							<AlertDialogFooter>
 							<AlertDialogCancel>Cancel</AlertDialogCancel>
-							<AlertDialogAction onClick={() => onDelete(resource._id)}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
+							<AlertDialogAction asChild onClick={() => onDelete(resource._id)}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
 							</AlertDialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>

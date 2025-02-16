@@ -33,7 +33,7 @@ export default function Page() {
 				lines: lines,
 				title: name
 			}
-			const res = await axios.put("/api/exercises", 
+			const res = await axios.put("/api/fill-in-the-blank", 
 				data
 			)
 			if (res.status != 200)
@@ -86,13 +86,11 @@ export default function Page() {
 			<CardContent>
 				{lines.map((line: LineType, index) => (
 					<Line
-					lines={lines}
-					setLines={setLines}
-					key={`line-${index}`} // Unique key based on index + content
-					lineData={line}
-					index={index}
-
-				/>
+						lines={lines}
+						setLines={setLines}
+						key={`line-${index}`} // Unique key based on index + content
+						lineData={line}
+						index={index} />
 				))}
 				<FcPlus  className='hover:cursor-pointer mt-12' onClick={addLine} size={32} />
 			</CardContent>
