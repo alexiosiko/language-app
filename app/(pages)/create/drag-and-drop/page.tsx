@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DndContext, useDraggable, useDroppable, DragEndEvent, UniqueIdentifier } from '@dnd-kit/core';
 import { useState } from 'react';
 
@@ -35,7 +36,7 @@ interface DroppableAreaProps {
 }
 
 function DroppableArea({ id, description, children }: DroppableAreaProps) {
-	const { isOver, setNodeRef } = useDroppable({ id });
+	const { setNodeRef } = useDroppable({ id });
 
 
 	return (
@@ -81,27 +82,32 @@ export default function DragAndDropGame() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className='flex justify-around'>
-        <div className='flex flex-col gap-4'>
-          {initialItems
-            .filter((item) => !Object.values(assignedItems).includes(item.id))
-            .map((item) => (
-              <DraggableItem key={item.id} id={item.id} content={item.content} />
-            ))}
-        </div>
-        <div className='w-[50%] flex flex-col'>
-          {Object.keys(assignedItems).map((dropId) => (
-            <DroppableArea key={dropId} id={dropId} description={`Description ${dropId}`}>
-              {assignedItems[dropId] ? (
-                <DraggableItem
-                  id={assignedItems[dropId]!}
-                  content={initialItems.find((item) => item.id === assignedItems[dropId])?.content || ''}
-                />
-              ) : <p className='relative mt-6'>____</p>}
-            </DroppableArea>
-          ))}
-        </div>
-      </div>
+      <Card className='flex justify-around'>
+		<CardHeader>
+			<CardTitle>Drag & Drop</CardTitle>
+		</CardHeader>
+		<CardContent>
+			<div className='flex flex-col gap-4'>
+				{initialItems
+					.filter((item) => !Object.values(assignedItems).includes(item.id))
+					.map((item) => (
+					<DraggableItem key={item.id} id={item.id} content={item.content} />
+					))}
+			</div>
+			<div className='w-[50%] flex flex-col'>
+				{Object.keys(assignedItems).map((dropId) => (
+					<DroppableArea key={dropId} id={dropId} description={`Description ${dropId}`}>
+					{assignedItems[dropId] ? (
+						<DraggableItem
+						id={assignedItems[dropId]!}
+						content={initialItems.find((item) => item.id === assignedItems[dropId])?.content || ''}
+						/>
+					) : <p className='relative mt-6'>____</p>}
+					</DroppableArea>
+				))}
+			</div>
+			</CardContent>
+		</Card>
     </DndContext>
   );
 }

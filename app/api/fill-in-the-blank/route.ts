@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
 		const collection = db.collection('fill-in-the-blank');
 
-		let data = await collection.findOne({ _id: new ObjectId(_id) });
+		const data = await collection.findOne({ _id: new ObjectId(_id) });
 
 		return NextResponse.json(data);
 	} catch (e: any) {

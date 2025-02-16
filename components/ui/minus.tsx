@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const MinusIcon = ({ size = 28, onClick, className }: {
@@ -5,7 +6,7 @@ const MinusIcon = ({ size = 28, onClick, className }: {
 	className?: string,
 	onClick?: React.MouseEventHandler<HTMLImageElement> | undefined
 }) => (
-	<img
+	<Image
 		onClick={onClick}
 		className={`object-contain ${className}`}
 		src="/icons/minus.png"
