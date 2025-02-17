@@ -1,11 +1,11 @@
 import { dbPromise } from "@/lib/mongodb";
-import { DragAndDropTypeWithout_id } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
+import { DragAndDropWithout_id } from "@/components/drag-and-drop/types";
 
 export async function PUT(req: NextRequest) {
 	try {
-		const data = await req.json() as DragAndDropTypeWithout_id;
+		const data = await req.json() as DragAndDropWithout_id;
 		const db = await dbPromise();
 		const collection = db.collection('drag-and-drop')
 		await collection.insertOne(data);
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 		if (!_id)
 			return NextResponse.json({ error: "_id is null" }, { status: 500 });
 				
-		const collection = db.collection('fill-in-the-blank');
+		const collection = db.collection('drag-and-drop');
 
 		const data = await collection.findOne({ _id: new ObjectId(_id) });
 
@@ -35,23 +35,23 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
 	try {
-	  const db = await dbPromise();
-	  const _id = req.nextUrl.searchParams.get('_id');
-	  
-	  if (!_id) 
-		return NextResponse.json({ error: "Missing _id parameter" }, { status: 400 });
-  
-	  const collection = db.collection('fill-in-the-blank');
-	  const result = await collection.deleteOne({ _id: new ObjectId(_id) });
-  
-	  if (result.deletedCount === 0) 
-		return NextResponse.json({ error: "Exercise not found" }, { status: 404 });
-	  
-  
-	  return NextResponse.json({ message: "Exercise deleted successfully" });
+		const db = await dbPromise();
+		const _id = req.nextUrl.searchParams.get('_id');
+		
+		if (!_id) 
+			return NextResponse.json({ error: "Missing _id parameter" }, { status: 400 });
+	
+		const collection = db.collection('drag-and-drop');
+		const result = await collection.deleteOne({ _id: new ObjectId(_id) });
+	
+		if (result.deletedCount === 0) 
+			return NextResponse.json({ error: "Exercise not found" }, { status: 404 });
+		
+	
+		return NextResponse.json({ message: "Exercise deleted successfully" });
 	} catch (e: any) {
-	  console.error(e);
-	  return NextResponse.json({ error: e.message }, { status: 500 });
+		console.error(e);
+		return NextResponse.json({ error: e.message }, { status: 500 });
 	}
 }
   

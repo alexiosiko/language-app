@@ -39,6 +39,7 @@ export default function Page() {
 			toast({
 				title: "Successfully deleted exercise"
 			})
+			location.reload();
 			router.push("/resources")
 
 		} catch (e: any) {

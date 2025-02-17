@@ -3,14 +3,14 @@
 	import { Input } from '../ui/input';
 	import { stringToArray } from '@/lib/utils';
 	import { Button } from '../ui/button';
-	import { LineType } from '@/lib/types';
-	import MinusIcon from '../ui/minus';
+	import { FillInTheBlankLineType } from '@/lib/types';
+	import FcMinus from '../ui/minus';
 
 	export default function Line({ lineData, index, setLines, lines }: {
-		lineData: LineType,
+		lineData: FillInTheBlankLineType,
 		index: number,
-		lines: LineType[],
-		setLines: React.Dispatch<React.SetStateAction<LineType[]>>,
+		lines: FillInTheBlankLineType[],
+		setLines: React.Dispatch<React.SetStateAction<FillInTheBlankLineType[]>>,
 	}) {
 		const handleTextChange = (e: any) => {
 			const line = lines[index];
@@ -38,10 +38,9 @@
 			<div className="mb-12 flex-col flex gap-2">
 				<div>
 					<div className="flex gap-2 items-center">
-					<MinusIcon
-					
-					onClick={() => onDelete()} 
-					className="hover:cursor-pointer mb-2" />
+					<FcMinus
+						onClick={() => onDelete()} 
+						className="hover:cursor-pointer mb-2" />
 					<p className="mb-2 text-base">Type your sentence:</p>
 					</div>
 					<Input

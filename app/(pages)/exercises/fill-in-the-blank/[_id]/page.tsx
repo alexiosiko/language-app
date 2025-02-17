@@ -73,22 +73,21 @@ export default function Page({ params }: {
 			)}
 			<CardFooter className='justify-end'>
 				{/* <Link href='/'><Button variant="secondary">Back</Button></Link> */}
-				
-			<AlertDialog>
-				<AlertDialogTrigger asChild><Button variant="destructive">Delete</Button></AlertDialogTrigger>
-				<AlertDialogContent>
-					<AlertDialogHeader>
-						<AlertDialogTitle>Are you sure you want to delete this exercise?</AlertDialogTitle>
-						<AlertDialogDescription>
-							This action cannot be undone. 
-						</AlertDialogDescription>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel>Cancel</AlertDialogCancel>
-						<AlertDialogAction asChild onClick={onDelete}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+				<AlertDialog>
+					<AlertDialogTrigger asChild><Button variant="destructive">Delete</Button></AlertDialogTrigger>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Are you sure you want to delete this exercise?</AlertDialogTitle>
+							<AlertDialogDescription>
+								This action cannot be undone. 
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogAction asChild onClick={onDelete}><Button variant="destructive">Yes Delete</Button></AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			</CardFooter>
 
 		</Card>

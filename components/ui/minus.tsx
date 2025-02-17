@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 
-const MinusIcon = ({ size = 28, onClick, className }: {
+const FcMinus = ({ size = 28, onClick, className }: {
 	size?: number,
 	className?: string,
 	onClick?: React.MouseEventHandler<HTMLImageElement> | undefined
 }) => (
 	<Image
 		onClick={onClick}
-		className={`object-contain ${className}`}
+		className={`object-contain hover:cursor-pointer ${className}`}
 		src="/icons/minus.png"
 		alt="Minus Icon"
 		width={size}
@@ -16,4 +16,4 @@ const MinusIcon = ({ size = 28, onClick, className }: {
 	/>
 );
 
-export default MinusIcon;
+export default FcMinus;

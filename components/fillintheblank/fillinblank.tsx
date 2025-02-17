@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { CardContent } from '@/components/ui/card'
-import { LineType } from '@/lib/types';
+import { FillInTheBlankLineType } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { FcSearch } from 'react-icons/fc';
 import { stringToArray } from '@/lib/utils';
 
 export default function FillInBlank({ line }: {
-	line: LineType,
+	line: FillInTheBlankLineType,
 }) {
 	const [reveal, setReveal] = useState<boolean>(false);
 

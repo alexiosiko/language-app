@@ -1,9 +1,11 @@
+import { DragAndDrop } from "@/components/drag-and-drop/types";
+
 export type FillInTheBlankWithoutObjectIdType = {
-	lines: LineType[],
+	lines: FillInTheBlankLineType[],
 	title: string,
 };
 
-export type LineType = {
+export type FillInTheBlankLineType = {
 	text: string;
 	blankIndices: number[];
 }
@@ -33,13 +35,6 @@ export type vector2 = {
 }
 
 
-export type DragAndDropTypeWithout_id = {
-	title: string,
-	slots: Slot[]
-}
-export type  DragAndDropType = DragAndDropTypeWithout_id & {
-	_id: string,
-}
 export type Slot = {
 	description: string,
 	correctItem: string,
@@ -47,6 +42,6 @@ export type Slot = {
 }
 
 export type Exercises = {
-	dragAndDrops: DragAndDropType[],
+	dragAndDrops: DragAndDrop[],
 	fillInTheBlanks: FillInTheBlankType[],
 } ;

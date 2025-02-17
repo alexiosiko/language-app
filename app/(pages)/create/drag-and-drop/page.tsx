@@ -1,113 +1,97 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DndContext, useDraggable, useDroppable, DragEndEvent, UniqueIdentifier } from '@dnd-kit/core';
-import { useState } from 'react';
+import { Line } from "@/components/drag-and-drop/line";
+import { DragAndDropWithout_id, DragAndDropLineType } from "@/components/drag-and-drop/types";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
+import axios from "axios";
+import { useState } from "react";
+import { FcPlus } from "react-icons/fc";
 
-interface Item {
-  id: UniqueIdentifier;
-  content: string;
-}
+const defaultValue: DragAndDropLineType[] = [{	description: "",	item: ""},{	description: "",	item: ""},{	description: "",	item: ""},{	description: "",	item: ""}];
 
-interface AssignedItems {
-  [key: UniqueIdentifier]: UniqueIdentifier | null;
-}
+export default function DragAndDropGame() {
+	const [title, setTitle] = useState<string>("");
+	const [uploading, setUploading] = useState<boolean>(false);
+	
+	const [lines, setLines] = useState<DragAndDropLineType[]>(defaultValue);
+	const onAddLine = () => {
+		setLines(prev => [
+			...prev,
+			{ description: "", item: "" }
+		]);
+	}
 
-function DraggableItem({ id, content }: Item) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
-  const style: React.CSSProperties = {
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
-
-    cursor: 'grab',
-  };
-
-  return (
-    <Button className='hover:cursor-grab' ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      {content}
-    </Button>
-  );
-}
-
-interface DroppableAreaProps {
-  id: UniqueIdentifier;
-  description: string;
-  children?: React.ReactNode;
-}
-
-function DroppableArea({ id, description, children }: DroppableAreaProps) {
-	const { setNodeRef } = useDroppable({ id });
-
+	const handleUpload = async () => {
+		try {
+			setUploading(true);
+			validate();
+			const data: DragAndDropWithout_id = {
+				lines: lines,
+				title: title,
+			}
+			const res = await axios.put("/api/drag-and-drop", data);
+			if (res.status != 200)
+				throw Error("Error in the server. Ask Alexi");
+			toast({
+				title: "Successfully uploaded exercise"
+			});
+			resetData();
+		} catch (e: any) {
+			toast({
+				title: e.message,
+				variant: "destructive"
+			});
+		} finally {
+			setUploading(false);
+		}
+	}
+	const resetData = () => {
+		setTitle("");
+		setLines(defaultValue);
+	}
+	const validate = () => {
+		if (title == "")
+			throw Error("Title cannot be empty.");
+		lines.forEach(lines => {
+			if (lines.description == "")
+				throw Error("All boxes must be filled");
+			if (lines.item == "")
+				throw Error("All boxes must be filled");
+		})
+	}
 
 	return (
-		<div ref={setNodeRef} className='grid grid-cols-2'>
-			<div>
-				{children}
-			</div>
-			<p>{description}</p>
-		</div>
+		<Card>
+			<CardHeader>
+				<CardTitle className="mb-4">Create a Fill in the blank</CardTitle>
+				<div className='flex gap-2 items-center'>
+					<p>Title:  </p>
+					<Input
+						placeholder="Enter title for this exercise"
+						value={title}
+						onChange={(e) => setTitle(e.target.value)}
+						/>
+				</div>
+			</CardHeader>
+			<CardContent>
+				{lines.map((line, index) => 
+					<Line
+						index={index}
+						lines={lines}
+						line={line}
+						setLines={setLines}
+						key={index}
+					/>
+				)}
+				<FcPlus onClick={() => onAddLine()} className="hover:cursor-pointer" size={32} />
+			</CardContent>
+			<CardFooter className="justify-end">
+				<Button  disabled={uploading} onClick={handleUpload} >Upload</Button>
+			</CardFooter>
+		</Card>
 	);
 }
 
-export default function DragAndDropGame() {
-  const initialItems: Item[] = [
-    { id: 'item-1', content: 'Item 1' },
-    { id: 'item-2', content: 'Item 2' },
-    { id: 'item-3', content: 'Item 3' },
-  ];
-
-  const [assignedItems, setAssignedItems] = useState<AssignedItems>({
-    'drop-1': null,
-    'drop-2': null,
-    'drop-3': null,
-  });
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { over, active } = event;
-    setAssignedItems((prev) => {
-      const newAssignedItems = { ...prev };
-      // Remove item from previous assignment
-      for (const key in newAssignedItems) {
-        if (newAssignedItems[key] === active.id) {
-          newAssignedItems[key] = null;
-        }
-      }
-      // Assign item to new droppable area if dropped over one
-      if (over) {
-        newAssignedItems[over.id] = active.id;
-      }
-      return newAssignedItems;
-    });
-  };
-
-  return (
-    <DndContext onDragEnd={handleDragEnd}>
-      <Card className='flex justify-around'>
-		<CardHeader>
-			<CardTitle>Drag & Drop</CardTitle>
-		</CardHeader>
-		<CardContent>
-			<div className='flex flex-col gap-4'>
-				{initialItems
-					.filter((item) => !Object.values(assignedItems).includes(item.id))
-					.map((item) => (
-					<DraggableItem key={item.id} id={item.id} content={item.content} />
-					))}
-			</div>
-			<div className='w-[50%] flex flex-col'>
-				{Object.keys(assignedItems).map((dropId) => (
-					<DroppableArea key={dropId} id={dropId} description={`Description ${dropId}`}>
-					{assignedItems[dropId] ? (
-						<DraggableItem
-						id={assignedItems[dropId]!}
-						content={initialItems.find((item) => item.id === assignedItems[dropId])?.content || ''}
-						/>
-					) : <p className='relative mt-6'>____</p>}
-					</DroppableArea>
-				))}
-			</div>
-			</CardContent>
-		</Card>
-    </DndContext>
-  );
-}
